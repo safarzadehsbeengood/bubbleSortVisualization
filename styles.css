@@ -1,0 +1,17 @@
+#doSort {
+    text-align: center;
+    color: white;
+    width: 50px;
+}
+
+#doSort:hover {
+    background-color: rgba(128, 128, 128, 0.602);
+}
+
+#doSort:active {
+    background-color: gray;
+}
+
+body {
+    background: black;
+}
