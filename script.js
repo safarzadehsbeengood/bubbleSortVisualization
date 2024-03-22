@@ -1,9 +1,10 @@
 var cnv;
 var nums = [];
-var n = 150;
+var n;
 let barWidth;
 let currI, currJ;
 var doSort;
+var nSlider;
 
 function setup() {
   frameRate(60);
@@ -13,6 +14,8 @@ function setup() {
   doSort = createCheckbox("Sort", false);
   doSort.position(width/2, 20);
   doSort.id("doSort");
+  nSlider = createSlider(20, 200, 80, 1);
+  n = nSlider.value();
   barWidth = width/n;
   for (let i = 0; i < n; i++) {
     nums.push(random(height-50));
@@ -21,9 +24,16 @@ function setup() {
   currJ = 0;
 }
 
+function remakeArray(n) {
+  nums = [];
+  for (let i = 0; i < n; i++) {
+    nums.push(random(height));
+  }
+}
+
 function onePass() {
   for (let i = 0; i < n-1; i++) {
-    for (j = 0; j < n-1; j++) {
+    for (let j = 0; j < n-1; j++) {
       if (nums[j] > nums[j+1]) {
         let temp = nums[j];
         nums[j] = nums[j+1];
@@ -37,6 +47,11 @@ function onePass() {
 }
 
 function draw() {
+  if (nSlider.value() != n) {
+    remakeArray(nSlider.value());
+    n = nSlider.value();
+    barWidth = width/n;
+  }
   background(0);
   fill(150);
   strokeWeight(1);
