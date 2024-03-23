@@ -19,8 +19,8 @@ function setup() {
   quickSortBtn.class("btn");
   quickSortBtn.mousePressed(doQuickSort);
   bubSortBtn.mousePressed(toggleBub);
-
   nSlider = createSlider(20, 200, 80, 1);
+  nSlider.position(width-100, 15);
   n = nSlider.value();
   barWidth = width/n;
   for (let i = 0; i < n; i++) {
@@ -66,6 +66,9 @@ function draw() {
   if (doBub % 2 == 0) {
     bubbleOnePass();
   }
+  noStroke();
+  fill(255);
+  text(`n: ${nSlider.value()}`, width/2, 20);
 }
 
 window.onresize = () => {
