@@ -5,15 +5,21 @@ let barWidth;
 let currI, currJ;
 var doSort;
 var nSlider;
+var bubSortBtn, quickSortBtn;
+let doBub = 1;
 
 function setup() {
-  frameRate(60);
+  // frameRate(10);
   cnv = createCanvas(windowWidth-100, windowHeight-100);
   cnv.position((windowWidth-width)/2, (windowHeight-height)/2);
   textSize(16);
-  doSort = createCheckbox("Sort", false);
-  doSort.position(width/2, 20);
-  doSort.id("doSort");
+  bubSortBtn = createButton('bubble');
+  quickSortBtn = createButton('quick');
+  bubSortBtn.class("btn");
+  quickSortBtn.class("btn");
+  quickSortBtn.mousePressed(doQuickSort);
+  bubSortBtn.mousePressed(toggleBub);
+
   nSlider = createSlider(20, 200, 80, 1);
   n = nSlider.value();
   barWidth = width/n;
@@ -29,22 +35,7 @@ function remakeArray(n) {
   for (let i = 0; i < n; i++) {
     nums.push(random(height));
   }
-}
-
-function bubbleOnePass() {
-  for (let i = 0; i < n-1; i++) {
-    for (let j = 0; j < n-1; j++) {
-      if (nums[j] > nums[j+1]) {
-        let temp = nums[j];
-        nums[j] = nums[j+1];
-        nums[j+1] = temp;
-        leftAt = i;
-        // return;
-        currJ = j;
-      }
-    }
-  return;
-  }
+  doBub = 1;
 }
 
 function draw() {
@@ -61,9 +52,6 @@ function draw() {
   for (let i = 0; i < nums.length; i++) {
     push();
     translate(0, height);
-    // if (i == leftAt) {
-    //   fill(color(200, 50, 50));
-    // }
     if (i == currJ) {
       fill(color(10, 200, 50));
     }
@@ -75,7 +63,7 @@ function draw() {
   stroke(100);
   noFill();
   rect(0, 0, width, height);
-  if (doSort.checked()) {
+  if (doBub % 2 == 0) {
     bubbleOnePass();
   }
 }
@@ -84,4 +72,8 @@ window.onresize = () => {
   resizeCanvas(windowWidth-100, windowHeight-100);
   barWidth = width/n;
   cnv.position((windowWidth-width)/2, (windowHeight-height)/2);
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
