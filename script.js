@@ -31,7 +31,7 @@ function remakeArray(n) {
   }
 }
 
-function onePass() {
+function bubbleOnePass() {
   for (let i = 0; i < n-1; i++) {
     for (let j = 0; j < n-1; j++) {
       if (nums[j] > nums[j+1]) {
@@ -39,10 +39,11 @@ function onePass() {
         nums[j] = nums[j+1];
         nums[j+1] = temp;
         leftAt = i;
-        return;
+        // return;
+        currJ = j;
       }
-      currJ = j;
     }
+  return;
   }
 }
 
@@ -75,7 +76,7 @@ function draw() {
   noFill();
   rect(0, 0, width, height);
   if (doSort.checked()) {
-    onePass();
+    bubbleOnePass();
   }
 }
 
